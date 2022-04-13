@@ -1,3 +1,3 @@
 # selenium-universe-tech
 
-Before starting testing, please add thechrome driver you need in src/main/resources directory
+Before starting testing, please add a chromedriver for your system in src/main/resources directory
