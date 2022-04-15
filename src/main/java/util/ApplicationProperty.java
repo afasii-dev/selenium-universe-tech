@@ -16,7 +16,7 @@ public class ApplicationProperty {
         }
     }
 
-    public static String get(String property) {
-        return appProps.getProperty(property);
+    public static String get(String key) {
+        return appProps.getProperty(key);
     }
 }

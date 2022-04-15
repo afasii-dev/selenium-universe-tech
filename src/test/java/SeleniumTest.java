@@ -6,28 +6,40 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static util.ApplicationProperty.get;
 
 public class SeleniumTest {
 
     private static ChromeDriver driver;
     private static WebDriverWait wait;
-    private static String CHROME_DRIVER = "src/main/resources/chromedriver";
+
+    private static String CHROME_DRIVER_PATH;
     private final static String BASE_URL = "https://www.opencart.com/index.php?route=%s";
 
     @BeforeAll
     static void setUp() {
         System.out.println("Before all method");
+        handleOperatingSystem();
 
-        String operatingSystem = System.getProperty("os.name").toLowerCase();
-        if (operatingSystem.contains("win")) {
-            CHROME_DRIVER = CHROME_DRIVER.concat(".exe");
-        }
-        System.setProperty("webdriver.chrome.driver", CHROME_DRIVER);
+        System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_PATH);
         driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, 30);
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        wait = new WebDriverWait(driver, 15);
+    }
+
+    private static void handleOperatingSystem() {
+        CHROME_DRIVER_PATH =
+                switch (System.getProperty("os.name").toLowerCase()) {
+                    case "win" -> get("chrome.driver.path.windows");
+                    case "linux" -> get("chrome.driver.path.linux");
+                    case "mac" -> get("chrome.driver.path.mac");
+                    default -> get("chrome.driver.path.default");
+                };
     }
 
     @BeforeEach
@@ -63,7 +75,7 @@ public class SeleniumTest {
     }
 
     @Test
-    public void demoTest() {
+    public void registrationTest() {
         String url = String.format(BASE_URL, "account/register");
         driver.get(url);
         WebElement username = driver.findElement(By.name("username"));
@@ -71,16 +83,20 @@ public class SeleniumTest {
         WebElement lastname = driver.findElement(By.name("lastname"));
         WebElement email = driver.findElement(By.name("email"));
         WebElement password = driver.findElement(By.name("password"));
+        List<WebElement> countries = driver.findElementsByTagName("option");
+        WebElement tadjikistanCountry = driver.findElementByXPath("//option[@value=207]");
         WebElement clickButton = driver.findElement(By.xpath("//*[@id=\"button-register\"]/button[1]"));
 
-        username.sendKeys("BBL");
-        firstname.sendKeys("Rustam");
-        lastname.sendKeys("Zarif");
-        email.sendKeys("sega-usmonjon@gmail.com");
-        password.sendKeys("123");
+        username.sendKeys("username");
+        firstname.sendKeys("firstname");
+        lastname.sendKeys("lastname");
+        email.sendKeys("email@gmail.com");
+        password.sendKeys("123456");
+        tadjikistanCountry.click();
+
+        //wait until captcha is resolved
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@class=\'bg-success\']")));
         clickButton.click();
-
     }
 
     @AfterEach
