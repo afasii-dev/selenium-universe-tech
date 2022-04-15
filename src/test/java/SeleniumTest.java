@@ -2,6 +2,8 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -11,14 +13,21 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class SeleniumTest {
 
     private static ChromeDriver driver;
-    private final static String CHROME_DRIVER = "src/main/resources/chromedriver";
+    private static WebDriverWait wait;
+    private static String CHROME_DRIVER = "src/main/resources/chromedriver";
     private final static String BASE_URL = "https://www.opencart.com/index.php?route=%s";
 
     @BeforeAll
     static void setUp() {
         System.out.println("Before all method");
+
+        String operatingSystem = System.getProperty("os.name").toLowerCase();
+        if (operatingSystem.contains("win")) {
+            CHROME_DRIVER = CHROME_DRIVER.concat(".exe");
+        }
         System.setProperty("webdriver.chrome.driver", CHROME_DRIVER);
         driver = new ChromeDriver();
+        wait = new WebDriverWait(driver, 30);
     }
 
     @BeforeEach
@@ -62,12 +71,16 @@ public class SeleniumTest {
         WebElement lastname = driver.findElement(By.name("lastname"));
         WebElement email = driver.findElement(By.name("email"));
         WebElement password = driver.findElement(By.name("password"));
+        WebElement clickButton = driver.findElement(By.xpath("//*[@id=\"button-register\"]/button[1]"));
 
         username.sendKeys("BBL");
         firstname.sendKeys("Rustam");
         lastname.sendKeys("Zarif");
         email.sendKeys("sega-usmonjon@gmail.com");
         password.sendKeys("123");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@class=\'bg-success\']")));
+        clickButton.click();
+
     }
 
     @AfterEach
