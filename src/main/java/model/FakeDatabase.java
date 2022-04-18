@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-public class Database {
+public class FakeDatabase {
     public static ArrayList<String> DATABASE = new ArrayList<>();
 
     static {
