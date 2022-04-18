@@ -1,3 +1,5 @@
+package other;
+
 import model.FakeDatabase;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;

@@ -1,3 +1,5 @@
+package other;
+
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.notNullValue;

@@ -1,47 +1,19 @@
-import org.junit.jupiter.api.*;
+package opencart;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static util.ApplicationProperty.get;
 
-public class SeleniumTest {
-
-    private static ChromeDriver driver;
-    private static WebDriverWait wait;
-
-    private static String CHROME_DRIVER_PATH;
-    private final static String BASE_URL = "https://www.opencart.com/index.php?route=%s";
-
-    @BeforeAll
-    static void setUp() {
-        System.out.println("Before all method");
-        handleOperatingSystem();
-
-        System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_PATH);
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        wait = new WebDriverWait(driver, 15);
-    }
-
-    private static void handleOperatingSystem() {
-        CHROME_DRIVER_PATH =
-                switch (System.getProperty("os.name").toLowerCase()) {
-                    case "win" -> get("chrome.driver.path.windows");
-                    case "linux" -> get("chrome.driver.path.linux");
-                    case "mac" -> get("chrome.driver.path.mac");
-                    default -> get("chrome.driver.path.default");
-                };
-    }
+public class RegisterPage extends OpenCartPage {
 
     @BeforeEach
     public void beforeEach() {
@@ -54,14 +26,6 @@ public class SeleniumTest {
         driver.get(url);
         String title = driver.getTitle();
         assertThat("Title is as expected", title, equalTo("OpenCart - Account Register"));
-    }
-
-    @Test
-    public void homePageTitleTest() {
-        String url = String.format(BASE_URL, "common/home");
-        driver.get(url);
-        String title = driver.getTitle();
-        assertThat("Title is as expected", title, equalTo("OpenCart - Open Source Shopping Cart Solution"));
     }
 
     @Test
@@ -98,6 +62,9 @@ public class SeleniumTest {
 //        //wait until captcha is resolved
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@class=\'bg-success\']")));
         clickButton.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@class='alert alert-danger']")));
+        WebElement alert = driver.findElement(By.xpath("//*[@class='alert alert-danger']"));
+        assertThat("Wrong email text is present", alert.getText(), containsString("Error: E-Mail Address is already registered!"));
     }
 
     @AfterEach
@@ -105,10 +72,4 @@ public class SeleniumTest {
         System.out.println("After each method");
     }
 
-    @AfterAll
-    static void finish() {
-        System.out.println("After all method");
-        driver.close();
-        driver.quit();
-    }
 }
