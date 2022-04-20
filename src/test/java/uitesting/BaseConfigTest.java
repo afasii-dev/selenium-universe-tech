@@ -3,6 +3,7 @@ package uitesting;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import util.OSEnum;
 
@@ -14,6 +15,8 @@ import static util.OSEnum.*;
 public class BaseConfigTest {
     public static ChromeDriver driver;
     public static WebDriverWait wait;
+
+    public static Actions actions;
 
     private static String CHROME_DRIVER_PATH;
 
@@ -27,6 +30,7 @@ public class BaseConfigTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver, 15);
+        actions = new Actions(driver);
     }
 
     private static void handleOperatingSystem() {
