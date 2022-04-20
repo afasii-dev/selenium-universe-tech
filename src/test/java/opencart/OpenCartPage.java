@@ -54,7 +54,7 @@ public class OpenCartPage {
 
     @AfterAll
     static void finish() {
-        System.out.println("After all method");
+        System.out.println("FINISH");
         driver.close();
         driver.quit();
     }
