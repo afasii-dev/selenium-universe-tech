@@ -1,4 +1,4 @@
-package opencart;
+package uitesting.opencart;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

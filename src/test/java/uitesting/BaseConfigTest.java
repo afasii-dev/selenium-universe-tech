@@ -1,4 +1,4 @@
-package opencart;
+package uitesting;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,12 +11,11 @@ import java.util.concurrent.TimeUnit;
 import static util.ApplicationProperty.get;
 import static util.OSEnum.*;
 
-public class OpenCartPage {
+public class BaseConfigTest {
     public static ChromeDriver driver;
     public static WebDriverWait wait;
 
     private static String CHROME_DRIVER_PATH;
-    public final static String BASE_URL = "https://www.opencart.com/index.php?route=%s";
 
     @BeforeAll
     static void setUp() {
