@@ -4,10 +4,12 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import util.OSEnum;
 
 import java.util.concurrent.TimeUnit;
 
 import static util.ApplicationProperty.get;
+import static util.OSEnum.*;
 
 public class OpenCartPage {
     public static ChromeDriver driver;
@@ -18,7 +20,7 @@ public class OpenCartPage {
 
     @BeforeAll
     static void setUp() {
-        System.out.println("Before all method");
+        System.out.println("STARTING THE TESTS...");
         handleOperatingSystem();
 
         System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_PATH);
@@ -30,12 +32,24 @@ public class OpenCartPage {
 
     private static void handleOperatingSystem() {
         CHROME_DRIVER_PATH =
-                switch (System.getProperty("os.name").toLowerCase()) {
-                    case "win" -> get("chrome.driver.path.windows");
-                    case "linux" -> get("chrome.driver.path.linux");
-                    case "mac" -> get("chrome.driver.path.mac");
-                    default -> get("chrome.driver.path.default");
+                switch (getOS()) {
+                    case WINDOWS -> get("chrome.driver.path.windows");
+                    case LINUX -> get("chrome.driver.path.linux");
+                    case MAC -> get("chrome.driver.path.mac");
                 };
+    }
+
+    private static OSEnum getOS() {
+        var osName = System.getProperty("os.name").toLowerCase();
+        if (osName.contains("win")) {
+            return WINDOWS;
+        } else if (osName.contains("linux")) {
+            return LINUX;
+        } else if (osName.contains("mac")) {
+            return MAC;
+        } else {
+            throw new IllegalArgumentException("OS UNSUPPORTED");
+        }
     }
 
     @AfterAll

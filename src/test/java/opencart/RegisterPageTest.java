@@ -13,7 +13,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class RegisterPage extends OpenCartPage {
+public class RegisterPageTest extends OpenCartPage {
 
     @BeforeEach
     public void beforeEach() {
@@ -43,6 +43,7 @@ public class RegisterPage extends OpenCartPage {
     public void registrationTest() {
         String url = String.format(BASE_URL, "account/register");
         driver.get(url);
+        wait.until(ExpectedConditions.titleIs("OpenCart - Account Register"));
         WebElement username = driver.findElement(By.name("username"));
         WebElement firstname = driver.findElement(By.name("firstname"));
         WebElement lastname = driver.findElement(By.name("lastname"));
@@ -59,7 +60,7 @@ public class RegisterPage extends OpenCartPage {
         password.sendKeys("123456");
         tadjikistanCountry.click();
 
-//        //wait until captcha is resolved
+        //wait until captcha is resolved
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@class=\'bg-success\']")));
         clickButton.click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@class='alert alert-danger']")));

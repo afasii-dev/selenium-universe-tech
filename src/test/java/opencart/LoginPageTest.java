@@ -2,7 +2,7 @@ package opencart;
 
 import org.junit.jupiter.api.Test;
 
-public class LoginPage extends OpenCartPage {
+public class LoginPageTest extends OpenCartPage {
     @Test
     public void loginTest() {
         String url = String.format(BASE_URL, "account/login");

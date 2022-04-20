@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class HomePage extends OpenCartPage {
+public class HomePageTest extends OpenCartPage {
 
     @Test
     public void homePageTitleTest() {
