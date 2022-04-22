@@ -1,6 +1,8 @@
 package uitesting.somontj;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import somon_tj.model.HomePage;
@@ -9,8 +11,15 @@ public class SomonHomePageTest extends SomonTjPage {
 
     private static HomePage homePage;
 
+    private TestInfo testInfo;
+
+    @BeforeEach
+    void init(TestInfo testInfo) {
+        this.testInfo = testInfo;
+    }
+
     @Test
-    public void homePageSearchFieldHappyFlow() {
+    public void homePageSearchFieldHappyFlow() throws Exception {
         homePage = PageFactory.initElements(driver, HomePage.class);
         driver.get(BASE_URL);
 
@@ -26,6 +35,7 @@ public class SomonHomePageTest extends SomonTjPage {
         homePage.getSearchButton().click();
 
         wait.until(ExpectedConditions.titleContains("Audi q7"));
+        screenshot.take();
     }
 
     @Test

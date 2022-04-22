@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import util.OSEnum;
+import util.Screenshot;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,6 +18,8 @@ public class BaseConfigTest {
     public static WebDriverWait wait;
 
     public static Actions actions;
+
+    public static Screenshot screenshot;
 
     private static String CHROME_DRIVER_PATH;
 
@@ -31,6 +34,7 @@ public class BaseConfigTest {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver, 15);
         actions = new Actions(driver);
+        screenshot = new Screenshot(driver);
     }
 
     private static void handleOperatingSystem() {
