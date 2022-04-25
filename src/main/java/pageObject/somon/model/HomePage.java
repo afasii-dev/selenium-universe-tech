@@ -1,4 +1,4 @@
-package somon_tj.model;
+package pageObject.somon.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

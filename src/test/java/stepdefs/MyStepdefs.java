@@ -5,39 +5,41 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.PageFactory;
+import pageObject.enums.Page;
+import pageObject.google.model.HomePage;
+import pageObject.google.model.SearchPage;
 import util.Driver;
 
-import static org.hamcrest.CoreMatchers.containsStringIgnoringCase;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MyStepdefs extends Driver {
 
-    @When("user opened google.com")
-    public void userOpenedGoogleCom() {
-        driver.get("https://www.google.com/");
-        String expectedTitle = "Google";
-        wait.until(ExpectedConditions.titleContains(expectedTitle));
-        assertThat("Title is as expected", driver.getTitle(), equalTo(expectedTitle));
+    HomePage homePage = PageFactory.initElements(driver, HomePage.class);
+    SearchPage searchPage = PageFactory.initElements(driver, SearchPage.class);
+
+    @When("^user opened (.*)$")
+    public void goTo(Page page) {
+        driver.get(page.getUrl());
+    }
+
+    @Then("^user is on (.*)$")
+    public void userIsOn(Page page) {
+        switch (page) {
+            case HOME_PAGE -> assertThat("Title is as expected", homePage.isHomePage(), equalTo(true));
+            case SEARCH_PAGE -> assertThat("Title is as expected", searchPage.isSearchPage(), equalTo(true));
+        }
     }
 
     @When("^user entered (.*) in the search field$")
     public void userEnteredValueInTheSearchField(String value) {
-        WebElement searchField = driver.findElementByName("q");
-        searchField.sendKeys(value);
+        homePage.getSearch().sendKeys(value);
     }
 
     @And("^user pressed (.*) button$")
     public void userPressedButton(Keys button) {
         WebElement searchField = driver.findElementByName("q");
         searchField.sendKeys(button);
-    }
-
-    @Then("user has been redirected to another page")
-    public void userHasBeenRedirectedToAnotherPage() {
-        String expectedUrlPiece = "search";
-        wait.until(ExpectedConditions.urlContains(expectedUrlPiece));
-        assertThat("Title is as expected", driver.getCurrentUrl(), containsStringIgnoringCase(expectedUrlPiece));
     }
 }

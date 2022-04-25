@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import somon_tj.model.HomePage;
+import pageObject.somon.model.HomePage;
 
 public class SomonHomePageTest extends SomonTjPage {
 
