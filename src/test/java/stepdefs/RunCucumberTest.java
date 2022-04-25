@@ -10,9 +10,10 @@ import org.junit.runner.RunWith;
         , glue = "stepdefs"
         , tags = "@HomePage"
         , plugin =
-        {"pretty", "html:target/cucumber-reports/html/Report.html",
-                "json:target/cucumber-reports/json/Report.json",
-                "junit:target/cucumber-reports/xml/Report.xml"
+        {"pretty"
+                , "html:target/cucumber-reports/html/Report.html"
+                , "json:target/cucumber-reports/json/Report.json"
+                , "junit:target/cucumber-reports/xml/Report.xml"
         }
 )
 public class RunCucumberTest {
