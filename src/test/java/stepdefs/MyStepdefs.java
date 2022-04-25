@@ -1,23 +1,18 @@
-package cucumber.stepdefs;
+package stepdefs;
 
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import util.Driver;
 
 import static org.hamcrest.CoreMatchers.containsStringIgnoringCase;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class MyStepdefs {
-
-    private ChromeDriver driver;
-    private WebDriverWait wait;
+public class MyStepdefs extends Driver {
 
     @When("user opened google.com")
     public void userOpenedGoogleCom() {
@@ -44,25 +39,5 @@ public class MyStepdefs {
         String expectedUrlPiece = "search";
         wait.until(ExpectedConditions.urlContains(expectedUrlPiece));
         assertThat("Title is as expected", driver.getCurrentUrl(), containsStringIgnoringCase(expectedUrlPiece));
-    }
-
-    @When("user clicked btnI button")
-    public void userClickedBtnIButton() {
-        driver.findElementByName("btnI").click();
-    }
-
-    @Given("^Init driver$")
-    public void driverInit() {
-
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, 15);
-    }
-
-    @And("^Close browser$")
-    public void closeBrowser() {
-        driver.close();
-        driver.quit();
     }
 }
