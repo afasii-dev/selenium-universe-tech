@@ -3,6 +3,7 @@ package stepdefs;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -39,7 +40,7 @@ public class MyStepdefs extends Driver {
 
     @And("^user pressed (.*) button$")
     public void userPressedButton(Keys button) {
-        WebElement searchField = driver.findElementByName("q");
+        WebElement searchField = driver.findElement(By.name("q"));
         searchField.sendKeys(button);
     }
 }

@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import util.OSEnum;
 import util.Screenshot;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static util.ApplicationProperty.get;
@@ -31,8 +32,7 @@ public class BaseConfigTest {
         System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_PATH);
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        wait = new WebDriverWait(driver, 15);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15L));
         actions = new Actions(driver);
         screenshot = new Screenshot(driver);
     }

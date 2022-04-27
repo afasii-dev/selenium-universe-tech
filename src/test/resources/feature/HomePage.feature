@@ -15,6 +15,6 @@ Feature: Google Home Page
     Examples:
       | value         | button |
       | Hello world   | ENTER  |
-      | Bye-bye world | ENTER  |
+#      | Bye-bye world | ENTER  |
 
     #  Hooks @AfterAll

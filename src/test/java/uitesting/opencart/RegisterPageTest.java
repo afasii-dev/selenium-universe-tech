@@ -32,7 +32,7 @@ public class RegisterPageTest extends OpenCartPage {
     public void getCountriesListTest() {
         String url = String.format(BASE_URL, "account/register");
         driver.get(url);
-        List<WebElement> countryId = driver.findElementsByXPath("//option[@value!=\'\']");
+        List<WebElement> countryId = driver.findElements(By.xpath("//option[@value!=\'\']"));
         countryId.forEach(e -> System.out.println(e.getText()));
         int expectedSize = 241;
         int actualSize = countryId.size();
@@ -49,8 +49,8 @@ public class RegisterPageTest extends OpenCartPage {
         WebElement lastname = driver.findElement(By.name("lastname"));
         WebElement email = driver.findElement(By.name("email"));
         WebElement password = driver.findElement(By.name("password"));
-        List<WebElement> countries = driver.findElementsByTagName("option");
-        WebElement tadjikistanCountry = driver.findElementByXPath("//option[@value=207]");
+        List<WebElement> countries = driver.findElements(By.tagName("option"));
+        WebElement tadjikistanCountry = driver.findElement(By.xpath("//option[@value=207]"));
         WebElement clickButton = driver.findElement(By.xpath("//*[@id=\"button-register\"]/button[1]"));
 
         username.sendKeys("username");
