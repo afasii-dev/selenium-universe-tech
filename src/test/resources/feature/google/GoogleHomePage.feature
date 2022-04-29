@@ -1,4 +1,4 @@
-@HomePage @Main
+@HomePage @Google
 Feature: Google Home Page
 
 #  Hooks @BeforeAll -> Driver init
@@ -13,8 +13,8 @@ Feature: Google Home Page
     And user pressed <button> button
     Then user is on SEARCH_PAGE
     Examples:
-      | value         | button |
-      | Hello world   | ENTER  |
+      | value       | button |
+      | Hello world | ENTER  |
 #      | Bye-bye world | ENTER  |
 
     #  Hooks @AfterAll

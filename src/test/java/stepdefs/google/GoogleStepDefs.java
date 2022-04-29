@@ -1,5 +1,8 @@
-package stepdefs;
+package stepdefs.google;
 
+import google.enums.GooglePage;
+import google.model.HomePage;
+import google.model.SearchPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -7,27 +10,24 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import pageObject.enums.Page;
-import pageObject.google.model.HomePage;
-import pageObject.google.model.SearchPage;
 import util.Driver;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class MyStepdefs extends Driver {
+public class GoogleStepDefs extends Driver {
 
     HomePage homePage = PageFactory.initElements(driver, HomePage.class);
     SearchPage searchPage = PageFactory.initElements(driver, SearchPage.class);
 
     @When("^user opened (.*)$")
-    public void goTo(Page page) {
-        driver.get(page.getUrl());
+    public void goTo(GooglePage googlePage) {
+        driver.get(googlePage.getUrl());
     }
 
     @Then("^user is on (.*)$")
-    public void userIsOn(Page page) {
-        switch (page) {
+    public void userIsOn(GooglePage googlePage) {
+        switch (googlePage) {
             case HOME_PAGE -> assertThat("Title is as expected", homePage.isHomePage(), equalTo(true));
             case SEARCH_PAGE -> assertThat("Title is as expected", searchPage.isSearchPage(), equalTo(true));
         }

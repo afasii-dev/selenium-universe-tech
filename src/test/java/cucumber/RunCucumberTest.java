@@ -1,4 +1,4 @@
-package stepdefs;
+package cucumber;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/resources/feature"
         , glue = "stepdefs"
-        , tags = "@HomePage"
+//        , tags = "@GoogleHomePage.feature"
         , plugin =
         {"pretty"
                 , "html:target/cucumber-reports/html/Report.html"

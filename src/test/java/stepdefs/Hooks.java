@@ -14,7 +14,7 @@ public class Hooks {
 
     @Before(order = 1)
     public void beforeEach() {
-        System.out.println("Restart the server  1");
+        System.out.println("Restart the server..");
     }
 
     @Before(order = 2)

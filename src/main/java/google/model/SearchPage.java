@@ -1,10 +1,11 @@
-package pageObject.google.model;
+package google.model;
 
 import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import util.Driver;
 
 @RequiredArgsConstructor
-public class SearchPage extends BasePage {
+public class SearchPage extends Driver {
 
     private final String SEARCH_PAGE_URL = "search";
 
