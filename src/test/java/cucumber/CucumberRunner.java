@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/resources/feature"
         , glue = "stepdefs"
-        , tags = "@Registration"
+        , tags = "@OpencartRegistration"
         , plugin =
         {"pretty"
                 , "html:target/cucumber-reports/html/Report.html"
@@ -16,5 +16,5 @@ import org.junit.runner.RunWith;
                 , "junit:target/cucumber-reports/xml/Report.xml"
         }
 )
-public class RunCucumberTest {
+public class CucumberRunner {
 }
