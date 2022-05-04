@@ -52,4 +52,12 @@ public class RegisterPage extends Driver {
         signUpButton.click();
     }
 
+    public void enterWrongData() {
+        firstName.sendKeys("Maxim");
+        lastName.sendKeys("Pupkin");
+        phone.sendKeys(getRandomNumeric(9));
+//        email.sendKeys(getRandomEmail(5));
+        password.sendKeys(randomAlphanumeric(10));
+        signUpButton.click();
+    }
 }
