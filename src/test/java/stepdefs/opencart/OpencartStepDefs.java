@@ -27,7 +27,6 @@ public class OpencartStepDefs extends Driver {
 
     @Then("success message is displayed")
     public void successMessageIsDisplayed() {
-//        WebElement successMessage = driver.findElement(By.className("col-sm-9"));
         wait.until(ExpectedConditions.textToBePresentInElementLocated(By.className("col-sm-9"), "Your Account Has Been Created!"));
     }
 

@@ -1,8 +1,10 @@
 package stepdefs.phpRegistration;
 
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import phptravels.enums.PhpTravelsPage;
 import phptravels.model.RegisterPage;
 import util.Driver;
@@ -23,8 +25,13 @@ public class PhpTravelsStepDefs extends Driver {
     }
 
     @When("^user enters the default data$")
-    public void userEntersTheDefaultData() throws InterruptedException {
+    public void userEntersTheDefaultData() {
         registerPage.enterDefaultData();
-        Thread.sleep(10000);
+    }
+
+    @Then("signup is successfully")
+    public void signupIsSuccessfully() {
+        // TODO: implement loginpage in order to validate the title
+        wait.until(ExpectedConditions.titleContains("Login - PHPTRAVELS"));
     }
 }
