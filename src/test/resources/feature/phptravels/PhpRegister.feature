@@ -8,3 +8,4 @@ Feature: Register page
     When user enters the default data
     Then signup is successfully
 
+

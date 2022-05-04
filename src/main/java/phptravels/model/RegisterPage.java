@@ -2,7 +2,6 @@ package phptravels.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,16 +9,13 @@ import util.Driver;
 
 import java.util.List;
 
+import static util.RandomStringUtils.*;
+
 @Getter
 @RequiredArgsConstructor
 public class RegisterPage extends Driver {
 
     private final String REGISTER_PAGE_TITLE = "Signup - PHPTRAVELS";
-
-    private static String RANDOM_EMAIL = String.format("%s@gmail.com", RandomStringUtils.randomAlphanumeric(10));
-    private static String RANDOM_PHONE = RandomStringUtils.randomNumeric(10);
-    private static String RANDOM_PASSWORD = RandomStringUtils.randomAlphanumeric(10);
-
 
     @FindBy(name = "first_name")
     private WebElement firstName;
@@ -50,9 +46,9 @@ public class RegisterPage extends Driver {
     public void enterDefaultData() {
         firstName.sendKeys("Maxim");
         lastName.sendKeys("Pupkin");
-        phone.sendKeys(RANDOM_PHONE);
-        email.sendKeys(RANDOM_EMAIL);
-        password.sendKeys(RANDOM_PASSWORD);
+        phone.sendKeys(getRandomNumeric(9));
+        email.sendKeys(getRandomEmail(5));
+        password.sendKeys(randomAlphanumeric(10));
         signUpButton.click();
     }
 
