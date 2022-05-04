@@ -1,7 +1,10 @@
 package opencart.model;
 
+import io.netty.util.internal.StringUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -12,6 +15,9 @@ import util.Driver;
 public class RegisterPage extends Driver {
 
     private final String REGISTER_PAGE_TITLE = "Register Account";
+
+    private static String RANDOM_EMAIL = String.format("%s@gmail.com"RandomStringUtils.randomAlphabetic(10);
+    private static String RANDOM_PHONE = RandomStringUtils.randomNumeric(10);
 
 
     @FindBy(name = "firstname")
@@ -47,7 +53,8 @@ public class RegisterPage extends Driver {
         firstName.sendKeys("Maxim");
         lastName.sendKeys("Pupkin");
         phone.sendKeys("9898432415");
-        email.sendKeys("qwerty123jj@gmail.com");
+        var randomEmail =
+        email.sendKeys(RANDOM_EMAIL);
         password.sendKeys("1234567");
         passwordConfirm.sendKeys("1234567");
         agreeCheckbox.click();
