@@ -3,6 +3,7 @@ package stepdefs.phpRegistration;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.support.PageFactory;
 import phptravels.enums.DataType;
 import phptravels.enums.PhpTravelsPage;
@@ -18,8 +19,11 @@ public class PhpTravelsStepDefs extends Driver {
     RegisterPage registerPage = PageFactory.initElements(driver, RegisterPage.class);
     LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
 
+    private static final Logger logger = Logger.getLogger(PhpTravelsStepDefs.class);
+
     @Given("^user goes to (.*)$")
     public void userGoesToPage(PhpTravelsPage phpTravelsPage) {
+        logger.debug("user is going to :" + phpTravelsPage.getUrl());
         driver.get(phpTravelsPage.getUrl());
 //        Thread.sleep(5000);
         switch (phpTravelsPage) {

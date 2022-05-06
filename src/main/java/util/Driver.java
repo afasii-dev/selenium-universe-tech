@@ -1,5 +1,6 @@
 package util;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -15,11 +16,14 @@ public class Driver {
 
     private static String CHROME_DRIVER_PATH;
 
+    private static final Logger logger = Logger.getLogger(Driver.class);
+
     public static void initialize() {
         if (driver == null) {
             handleOperatingSystem();
             System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_PATH);
             driver = new ChromeDriver();
+            logger.info("Driver is initialized...");
         }
 
         //Perform Basic Operations
@@ -35,6 +39,7 @@ public class Driver {
                     case LINUX -> get("chrome.driver.path.linux");
                     case MAC -> get("chrome.driver.path.mac");
                 };
+        logger.info("Chrome driver path: " + CHROME_DRIVER_PATH);
     }
 
     private static OSEnum getOS() {
