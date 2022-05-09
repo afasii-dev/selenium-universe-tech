@@ -1,6 +1,8 @@
 package util;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -13,6 +15,8 @@ public class Driver {
 
     public static ChromeDriver driver = null;
     public static WebDriverWait wait = null;
+
+    public static Screenshot screenshot = null;
 
     private static String CHROME_DRIVER_PATH;
 
@@ -30,6 +34,7 @@ public class Driver {
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(15L));
+        screenshot = new Screenshot(driver);
     }
 
     private static void handleOperatingSystem() {
@@ -61,7 +66,14 @@ public class Driver {
         driver = null; // we destroy the driver object after quit operation
     }
 
-    public static void openUrl(String url) {
-        driver.get(url);
+    public static void sendKeys(WebElement webElement, String keysToSend) {
+        drawBorder(webElement);
+        webElement.sendKeys(keysToSend);
+    }
+
+    public static WebElement drawBorder(WebElement webElement) {
+        JavascriptExecutor js = driver;
+        js.executeScript("arguments[0].style.border='3px solid red'", webElement);
+        return webElement;
     }
 }

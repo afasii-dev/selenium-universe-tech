@@ -5,16 +5,19 @@ Feature: Register page
     Given user goes to REGISTER_PAGE
 
   Scenario Outline: User registration positive case
-    When user enters the <dataType> data
+    When user enters the following data
+      | firstName  | lastName  | phone    | email        | password   |
+      | Ibrohimjon | Abdulloev | 12345670 | ib@gmail.com | 1234567890 |
     Then signup is <status>
     Examples:
-      | dataType | status  |
-      | DEFAULT  | SUCCESS |
-      | CUSTOM   | FAILED  |
+      | status  |
+      | SUCCESS |
 
-#  Scenario: User registration negative case
-#    When user enters the CUSTOM data
-#    Then signup is FAILED
+  Scenario: User registration negative case
+    When user enters the following data
+      | firstName  | lastName  | phone    | email | password   |
+      | Ibrohimjon | Abdulloev | 12345670 |       | 1234567890 |
+    Then signup is FAILED
 
 
 
