@@ -2,6 +2,7 @@ package phptravels.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import util.Driver;
 
@@ -15,4 +16,7 @@ public class LoginPage extends Driver {
         wait.until(ExpectedConditions.titleContains(LOGIN_PAGE_TITLE));
         return driver.getTitle().contains(LOGIN_PAGE_TITLE);
     }
+
+//    @FindBy() LoginButton
+
 }
