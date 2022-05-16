@@ -6,6 +6,7 @@ import io.cucumber.java.en.When;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.support.PageFactory;
 import phptravels.RegistrationFormData;
+import phptravels.enums.DataType;
 import phptravels.enums.PhpTravelsPage;
 import phptravels.enums.Status;
 import phptravels.model.LoginPage;
@@ -32,13 +33,13 @@ public class PhpTravelsStepDefs extends Driver {
         }
     }
 
-//    @When("^user enters the (.*) data$")
-//    public void userEntersTheDefaultData(DataType dataType) throws Exception {
-//        switch (dataType) {
-//            case DEFAULT -> registerPage.enterDefaultData();
-//            case CUSTOM -> registerPage.enterWrongData();
-//        }
-//    }
+    @When("^user enters the (.*) data$")
+    public void userEntersTheDefaultData(DataType dataType) throws Exception {
+        switch (dataType) {
+            case DEFAULT -> registerPage.enterDefaultData();
+            case CUSTOM -> registerPage.enterWrongData();
+        }
+    }
 
     @When("^user enters the following data$")
     public void userEntersTheFollowingData(List<RegistrationFormData> registrationFormData) {
