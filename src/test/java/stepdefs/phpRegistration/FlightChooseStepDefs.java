@@ -36,6 +36,6 @@ public class FlightChooseStepDefs extends Driver {
 
     @And("user chose round trip and dates")
     public void userChoseRoundTripAndDates() {
-        flightPage.getRoundTrip().click();
+//        flightPage.getRoundTrip().click();
     }
 }
