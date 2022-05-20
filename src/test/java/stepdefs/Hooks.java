@@ -12,17 +12,12 @@ public class Hooks {
 
     @BeforeAll
     public static void beforeAll() {
-        Driver.initialize();
+        logger.info("TESTING STARTED...");
     }
 
-    @Before(order = 1)
+    @Before(order = 1, value = "@SELENIUM")
     public void beforeEach() {
-        logger.info("Restart the server..");
-    }
-
-    @Before(order = 2)
-    public void cleanupDatabase() {
-        logger.info("Cleanup DB...");
+        Driver.initialize();
     }
 
     @AfterAll

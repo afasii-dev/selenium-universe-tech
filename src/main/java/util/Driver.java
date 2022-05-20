@@ -61,9 +61,11 @@ public class Driver {
     }
 
     public static void quit() {
-        driver.close();
-        driver.quit();
-        driver = null; // we destroy the driver object after quit operation
+        if (driver != null) {
+            driver.close();
+            driver.quit();
+            driver = null; // we destroy the driver object after quit operation
+        }
     }
 
     public static void sendKeys(WebElement webElement, String keysToSend) {
