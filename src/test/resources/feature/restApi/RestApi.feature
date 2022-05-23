@@ -18,9 +18,9 @@ Feature: Rest Api
 
   Scenario: Save new user - positive
     When save new user endpoint is called
-      | username | Rustam   |
-      | password | 12345687 |
-#    Then new user successfully added and saved
+      | username | password |
+      | Rustam   | 12345687 |
+    Then new user successfully added and saved
 
 
 #Scenario Saving  new user negative case

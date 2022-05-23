@@ -1,14 +1,15 @@
 package stepdefs;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import cucumber.ScenarioContext;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
+import org.apache.log4j.Logger;
+import rest.User;
 
-import java.util.Map;
-
-import static enums.Data.RESPONSE_BODY_AS_STRING;
-import static enums.Data.STATUS_CODE;
+import static enums.Data.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,24 +17,7 @@ import static util.RestUtil.*;
 
 public class RestStepDefs {
 
-
-//    @Given("user performs get request")
-//    public void userPerformsGetRequest() {
-//
-//        RestAssured.baseURI = "http://localhost/";
-//        RestAssured.port = 8080;
-//        Response response = given().header("Content-Type", "application/json")
-//                .body("test body")
-//                .log()
-//                .all()
-//                .post("/v1/users")
-//                .then()
-//                .log()
-//                .body()
-//                .extract().response();
-//        assertThat(response.getStatusCode(), is(200));
-//    }
-
+    private static final Logger logger = Logger.getLogger(RestStepDefs.class);
     ScenarioContext scenarioContext = new ScenarioContext();
 
     @When("^get all users endpoint is called$")
@@ -89,11 +73,27 @@ public class RestStepDefs {
     }
 
     @When("save new user endpoint is called")
-    public void saveNewUserEndpointIsCalled(Map<String, String> dataTable) {
-        String body = generateBody(dataTable);
-        Response response = saveUser(body);
+    public void saveNewUserEndpointIsCalled(User user) throws JsonProcessingException {
+        String jsonBody = objectToJSON(user);
+        logger.warn("JSON Body generated: " + jsonBody);
 
+        Response response = saveUser(jsonBody);
         scenarioContext.saveData(STATUS_CODE, response.getStatusCode());
         scenarioContext.saveData(RESPONSE_BODY_AS_STRING, response.getBody().asPrettyString());
+        scenarioContext.saveData(JSON_BODY_SENT, jsonBody);
+    }
+
+    @Then("new user successfully added and saved")
+    public void newUserSuccessfullyAddedAndSaved() throws JsonProcessingException {
+        int statusCode = (int) scenarioContext.getData(STATUS_CODE);
+        assertThat(statusCode, is(200));
+
+        String expectedUser = (String) scenarioContext.getData(JSON_BODY_SENT);
+        String registeredUser = (String) scenarioContext.getData(RESPONSE_BODY_AS_STRING);
+
+        User expected = new ObjectMapper().readValue(expectedUser, User.class);
+        User actual = new ObjectMapper().readValue(registeredUser, User.class);
+        assertThat(expected.getUsername(), is(actual.getUsername()));
+        assertThat(expected.getPassword(), is(actual.getPassword()));
     }
 }

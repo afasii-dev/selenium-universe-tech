@@ -1,9 +1,10 @@
 package util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-
-import java.util.Map;
+import rest.User;
 
 import static io.restassured.RestAssured.given;
 
@@ -49,17 +50,8 @@ public class RestUtil {
                 .extract().response();
     }
 
-    public static String generateBody(Map<String, String> dataTable) {
-        String username = dataTable.get("username");
-        String password = dataTable.get("password");
-
-        String bodyTemplate = """
-                {
-                     "username": "%s",
-                     "password": "%s"
-                }
-                """;
-
-        return String.format(bodyTemplate, username, password);
+    public static String objectToJSON(User user) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(user);
     }
 }
