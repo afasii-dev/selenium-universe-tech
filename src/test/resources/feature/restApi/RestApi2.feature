@@ -7,14 +7,10 @@ Feature: Rest Api
 #  Then App shown error message "400 Bad Request"
 
   Scenario: Update user positive case
-    Given save new user endpoint is called
-      | username | password |
-      | Rustam   | 12345687 |
-    Then new user successfully added and saved
     When Updating user
       | username  | password | id |
       | Ibrohim22 | pass11   | 4  |
-  Then user successfully updated
+    Then user successfully updated
 #  Examples:
 #  |usernam| passwor|
 #  |Ibrohim  | 12345|

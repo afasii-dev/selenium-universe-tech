@@ -3,11 +3,13 @@ package stepdefs;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cucumber.ScenarioContext;
+import enums.Error;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import org.apache.log4j.Logger;
 import rest.User;
+import util.RestUtil;
 
 import static enums.Data.*;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -98,27 +100,49 @@ public class RestStepDefs {
     }
 
     @When("Updating user")
-    public void updatingUser(User user) throws com.fasterxml.jackson.core.JsonProcessingException {
+    public void updatingUser(User user) throws JsonProcessingException {
         String jsonBody = objectToJSON(user);
         logger.warn("JSON Body generated: " + jsonBody);
 
         Response response = updateUser(jsonBody);
-        scenarioContext.updateData(STATUS_CODE, response.getStatusCode());
-        scenarioContext.updateData(RESPONSE_BODY_AS_STRING, response.getBody().asPrettyString());
-        @Then("new user successfully updated and saved")
-                scenarioContext.updateData(JSON_BODY_SENT, jsonBody);
+        scenarioContext.saveData(STATUS_CODE, response.getStatusCode());
+        scenarioContext.saveData(RESPONSE_BODY_AS_STRING, response.getBody().asPrettyString());
+        scenarioContext.saveData(JSON_BODY_SENT, jsonBody);
     }
 
-//    public void newUserSuccessfullyUpdatedAndSaved() throws JsonProcessingException {
-//        int statusCode = (int) scenarioContext.updateData(STATUS_CODE);
-//        assertThat(statusCode, is(200));
-//
-//        String expectedUser1 = (String) scenarioContext.updateData(JSON_BODY_SENT);
-//        String registeredUser1 = (String) scenarioContext.updateData(RESPONSE_BODY_AS_STRING);
-//
-//        User expected1 = new ObjectMapper().readValue(expectedUser1, User.class);
-//        User actual1 = new ObjectMapper().readValue(registeredUser1, User.class);
-//        assertThat(expected1.getUsername(), is(actual1.getUsername()));
-//        assertThat(expected1.getPassword(), is(actual1.getPassword()));
-//    }
+    @Then("user successfully updated")
+    public void userSuccessfullyUpdated() throws JsonProcessingException {
+        int statusCode = (int) scenarioContext.getData(STATUS_CODE);
+        assertThat(statusCode, is(200));
+
+        String expectedUser = (String) scenarioContext.getData(JSON_BODY_SENT);
+        String updatedUser = (String) scenarioContext.getData(RESPONSE_BODY_AS_STRING);
+
+        User expected = new ObjectMapper().readValue(expectedUser, User.class);
+        User actual = new ObjectMapper().readValue(updatedUser, User.class);
+        assertThat(expected.getUsername(), is(actual.getUsername()));
+        assertThat(expected.getPassword(), is(actual.getPassword()));
+        assertThat(expected.getId(), is(actual.getId()));
+    }
+
+    @Then("^response contains (.*)$")
+    public void responseContainsErrorMessage(Error error) {
+        int statusCode = (int) scenarioContext.getData(STATUS_CODE);
+        assertThat(statusCode, is(error.getStatus()));
+
+        String responseBody = (String) scenarioContext.getData(RESPONSE_BODY_AS_STRING);
+        assertThat(responseBody.contains(error.getError()), is(true));
+    }
+
+    @When("delete user by id endpoint is called")
+    public void deleteUserByIdEndpointIsCalled(String id) {
+        Response response = RestUtil.deleteUserById(id);
+        scenarioContext.saveData(STATUS_CODE, response.getStatusCode());
+    }
+
+    @Then("validate user is deleted")
+    public void validateUserIsDeleted() {
+        int statusCode = (int) scenarioContext.getData(STATUS_CODE);
+        assertThat(statusCode, is(200));
+    }
 }

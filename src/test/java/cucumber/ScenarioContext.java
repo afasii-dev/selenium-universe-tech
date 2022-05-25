@@ -17,15 +17,7 @@ public class ScenarioContext {
         scenarioContext.put(key.toString(), value);
     }
 
-    public void updateData(Data key, Object value) {
-        scenarioContext.put(key.toString(), value);
-    }
-
     public Object getData(Data key) {
         return scenarioContext.get(key.toString());
-    }
-
-    public Boolean isContains(Data key) {
-        return scenarioContext.containsKey(key.toString());
     }
 }

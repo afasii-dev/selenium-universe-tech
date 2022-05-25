@@ -67,4 +67,15 @@ public class RestUtil {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(user);
     }
+
+    public static Response deleteUserById(String id) {
+        return given()
+                .log()
+                .all()
+                .delete(String.format("/v1/users/%s", id))
+                .then()
+                .log()
+                .body()
+                .extract().response();
+    }
 }
