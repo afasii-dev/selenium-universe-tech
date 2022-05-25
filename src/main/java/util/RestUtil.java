@@ -26,7 +26,7 @@ public class RestUtil {
                 .extract().response();
     }
 
-    public static Response getUser(String id) {
+    public static Response getUserById(String id) {
         return given()
                 .log()
                 .all()
@@ -44,6 +44,19 @@ public class RestUtil {
                 .log()
                 .all()
                 .post("/v1/users")
+                .then()
+                .log()
+                .body()
+                .extract().response();
+    }
+
+    public static Response updateUser(String body) {
+        return given()
+                .header("Content-Type", "application/json")
+                .body(body)
+                .log()
+                .all()
+                .put("/v1/users/")
                 .then()
                 .log()
                 .body()
